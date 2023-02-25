@@ -785,12 +785,6 @@ public class PlacePageView extends Fragment implements View.OnClickListener,
     }
   }
 
-  @Override
-  public void onLocationDisabled() {}
-
-  @Override
-  public void onLocationResolutionRequired(@NonNull PendingIntent pendingIntent) {}
-
   public interface PlacePageViewListener
   {
     // Called when the content has actually changed and we are ready to compute the peek height

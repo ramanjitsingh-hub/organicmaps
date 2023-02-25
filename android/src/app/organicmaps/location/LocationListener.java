@@ -8,26 +8,19 @@ import androidx.annotation.UiThread;
 
 public interface LocationListener
 {
-  class Simple implements LocationListener
+  void onLocationUpdated(@NonNull Location location);
+  default void onCompassUpdated(double north)
   {
-    @Override
-    public void onLocationUpdated(@NonNull Location location) {}
-
-    @Override
-    public void onCompassUpdated(double north) {}
-
-    @Override
-    public void onLocationDisabled() {}
-
-    @Override
-    public void onLocationResolutionRequired(@NonNull PendingIntent pendingIntent) {}
+    // No op.
   }
 
-  void onLocationUpdated(@NonNull Location location);
+  default void onLocationDisabled()
+  {
+    // No op.
+  }
 
-  void onCompassUpdated(double north);
-
-  void onLocationDisabled();
-
-  void onLocationResolutionRequired(@NonNull PendingIntent pendingIntent);
+  default void onLocationResolutionRequired(@NonNull PendingIntent pendingIntent)
+  {
+    // No op.
+  }
 }
