@@ -1,5 +1,6 @@
 package app.organicmaps.widget.placepage;
 
+import android.app.PendingIntent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -137,4 +138,10 @@ public class DirectionFragment extends BaseMwmDialogFragment
     if (da.getAzimuth() >= 0)
       mAvDirection.setAzimuth(da.getAzimuth());
   }
+
+  @Override
+  public void onLocationDisabled() {}
+
+  @Override
+  public void onLocationResolutionRequired(@NonNull PendingIntent pendingIntent) {}
 }

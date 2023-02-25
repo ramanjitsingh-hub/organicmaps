@@ -8,12 +8,14 @@ import java.lang.annotation.RetentionPolicy;
 
 public final class LocationState
 {
+  public static final String LOCATION_TAG = LocationState.class.getPackage().getName();
+
   public interface ModeChangeListener
   {
     void onMyPositionModeChanged(int newMode);
   }
 
-  interface PendingTimeoutListener
+  public interface PendingTimeoutListener
   {
     void onLocationPendingTimeout();
   }
@@ -29,6 +31,13 @@ public final class LocationState
   public static final int FOLLOW = 3;
   public static final int FOLLOW_AND_ROTATE = 4;
 
+  // These constants should correspond to values defined in platform/location.hpp
+  // Leave 0-value as no any error.
+  //private static final int ERROR_UNKNOWN = 0;
+  //private static final int ERROR_NOT_SUPPORTED = 1;
+  public static final int ERROR_DENIED = 2;
+  public static final int ERROR_GPS_OFF = 3;
+
   public static native void nativeSwitchToNextMode();
   @Value
   public static native int nativeGetMode();
@@ -36,8 +45,12 @@ public final class LocationState
   public static native void nativeSetListener(@NonNull ModeChangeListener listener);
   public static native void nativeRemoveListener();
 
-  static native void nativeSetLocationPendingTimeoutListener(@NonNull PendingTimeoutListener listener);
-  static native void nativeRemoveLocationPendingTimeoutListener();
+  public static native void nativeSetLocationPendingTimeoutListener(@NonNull PendingTimeoutListener listener);
+  public static native void nativeRemoveLocationPendingTimeoutListener();
+
+  public static native void nativeOnLocationError(int errorCode);
+  static native void nativeLocationUpdated(long time, double lat, double lon, float accuracy,
+                                           double altitude, float speed, float bearing);
 
   private LocationState() {}
 

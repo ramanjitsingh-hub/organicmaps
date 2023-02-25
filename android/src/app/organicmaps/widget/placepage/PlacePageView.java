@@ -1,6 +1,7 @@
 package app.organicmaps.widget.placepage;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -783,6 +784,12 @@ public class PlacePageView extends Fragment implements View.OnClickListener,
       mAvDirection.setAzimuth(azimuth);
     }
   }
+
+  @Override
+  public void onLocationDisabled() {}
+
+  @Override
+  public void onLocationResolutionRequired(@NonNull PendingIntent pendingIntent) {}
 
   public interface PlacePageViewListener
   {
