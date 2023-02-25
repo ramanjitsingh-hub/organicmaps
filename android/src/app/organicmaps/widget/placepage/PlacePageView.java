@@ -39,15 +39,12 @@ import app.organicmaps.downloader.CountryItem;
 import app.organicmaps.downloader.DownloaderStatusIcon;
 import app.organicmaps.downloader.MapManager;
 import app.organicmaps.editor.Editor;
-import app.organicmaps.editor.OpeningHours;
-import app.organicmaps.editor.data.Timetable;
 import app.organicmaps.location.LocationHelper;
 import app.organicmaps.location.LocationListener;
 import app.organicmaps.routing.RoutingController;
 import app.organicmaps.settings.RoadType;
 import app.organicmaps.util.SharingUtils;
 import app.organicmaps.util.StringUtils;
-import app.organicmaps.util.ThemeUtils;
 import app.organicmaps.util.UiUtils;
 import app.organicmaps.util.concurrency.UiThread;
 import app.organicmaps.widget.ArrowView;
@@ -167,6 +164,7 @@ public class PlacePageView extends Fragment implements View.OnClickListener,
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
   {
+    viewModel = new ViewModelProvider(requireActivity()).get(PlacePageViewModel.class);
     return inflater.inflate(R.layout.place_page, container, false);
   }
 
@@ -241,7 +239,6 @@ public class PlacePageView extends Fragment implements View.OnClickListener,
 
     mDownloaderInfo = mPreview.findViewById(R.id.tv__downloader_details);
 
-    viewModel = new ViewModelProvider(requireActivity()).get(PlacePageViewModel.class);
     viewModel.getMapObject().observe(requireActivity(), this);
     mMapObject = viewModel.getMapObject().getValue();
 
@@ -256,9 +253,9 @@ public class PlacePageView extends Fragment implements View.OnClickListener,
   }
 
   @Override
-  public void onDestroy()
+  public void onDestroyView()
   {
-    super.onDestroy();
+    super.onDestroyView();
     detachCountry();
     viewModel.getMapObject().removeObserver(this);
     LocationHelper.INSTANCE.removeListener(this);
